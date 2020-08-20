@@ -7,12 +7,6 @@ const todo = (state = { todos: [], loading: true }, action) => {
         todos: action.payload,
       };
 
-    case 'TODO_ADD':
-      return {
-        ...state,
-        todos: [...state.todos, { title: action.payload, done: false }],
-      };
-
     default:
       return state;
   }

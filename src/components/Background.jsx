@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './Background.css';
+import './styles/Background.css';
+
 import Particles from 'react-particles-js';
 import arrayOfParticleJsConfigObjects from '../data/particlesJsParams';
 

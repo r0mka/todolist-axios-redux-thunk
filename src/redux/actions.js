@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const url = 'https://sleepy-taiga-81385.herokuapp.com/todo';
+const TODOS_API = 'https://sleepy-taiga-81385.herokuapp.com/todo';
 
-function fetchTodos(dispatch) {
+// Helper function. Fetches all todos and updates todos property on the state;
+const fetchTodos = (dispatch) =>
   axios
-    .get(url)
+    .get(TODOS_API)
     .then((response) => {
       const fetchedList = response.data.map(
         ({ _id, name, done, description }) => ({
@@ -17,32 +18,47 @@ function fetchTodos(dispatch) {
       dispatch({ type: 'GET_TODO_LIST', payload: fetchedList });
     })
     .catch((error) => console.log(error));
-}
 
-export function getList() {
-  return (dispatch) => fetchTodos(dispatch);
-}
+export const getList = () => (dispatch) => fetchTodos(dispatch);
 
-export function addTodo(newTitle) {
-  return (dispatch) => {
-    axios
-      .post(url, {
-        name: newTitle,
-      })
-      .then((response) => {
-        console.log(response.data);
-        return fetchTodos(dispatch);
-      })
-      .catch((error) => console.log(error));
-  };
-}
-
-export const deleteTodo = (id) => (dispatch) => {
+export const addTodo = (newTitle) => (dispatch) =>
   axios
-    .delete(`${url}/${id}`)
+    .post(TODOS_API, {
+      name: newTitle,
+    })
     .then((response) => {
       console.log(response.data);
       return fetchTodos(dispatch);
     })
     .catch((error) => console.log(error));
-};
+
+export const deleteTodo = (id) => (dispatch) =>
+  axios
+    .delete(`${TODOS_API}/${id}`)
+    .then((response) => {
+      console.log(response.data);
+      return fetchTodos(dispatch);
+    })
+    .catch((error) => console.log(error));
+
+export const updateTodo = (id, newTitle) => (dispatch) =>
+  axios
+    .patch(`${TODOS_API}/${id}`, {
+      name: newTitle,
+    })
+    .then((response) => {
+      console.log(response.data);
+      return fetchTodos(dispatch);
+    })
+    .catch((error) => console.log(error));
+
+export const toggleDone = (id, currentDoneStatus) => (dispatch) =>
+  axios
+    .put(`${TODOS_API}/${id}`, {
+      done: !currentDoneStatus,
+    })
+    .then((response) => {
+      console.log(response.data);
+      return fetchTodos(dispatch);
+    })
+    .catch((error) => console.log(error));
