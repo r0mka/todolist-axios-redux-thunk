@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles/Todo.css';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa';
 
 export default function Todo({ id, title, done, update, destroy, toggle }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [inputValue, setInputValue] = useState(title);
-  const [checked, setChecked] = useState(done);
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [inputValue, setInputValue] = React.useState(title);
 
   const saveTodo = (e) => {
     e.preventDefault();
     update(id, inputValue);
     setIsEditing(false);
-  };
-
-  const toggleCheckbox = () => {
-    setChecked((checked) => {
-      toggle(id);
-      return !checked;
-    });
   };
 
   let result;
@@ -37,10 +29,10 @@ export default function Todo({ id, title, done, update, destroy, toggle }) {
   }
 
   return (
-    <li className={`Todo ${checked && 'completed'}`}>
+    <li className={`Todo ${done && 'completed'}`}>
       <div className="checkbox-container">
         <label className="checkbox-label">
-          <input type="checkbox" onChange={toggleCheckbox} checked={checked} />
+          <input type="checkbox" onChange={() => toggle(id)} checked={done} />
           <span className="checkbox-custom rectangular"></span>
         </label>
       </div>

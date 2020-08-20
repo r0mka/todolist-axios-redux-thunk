@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles/TodoCreateForm.css';
 
-export default function TodoCreateForm(props) {
-  const [inputValue, setInputValue] = useState('');
+export default function TodoCreateForm({ create }) {
+  const [inputValue, setInputValue] = React.useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.create(inputValue);
+    create(inputValue);
     setInputValue('');
   };
   return (

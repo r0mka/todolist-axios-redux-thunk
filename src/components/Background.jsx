@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles/Background.css';
 
 import Particles from 'react-particles-js';
@@ -11,15 +11,15 @@ const optionsToName = {
 };
 
 export default function Background() {
-  const [backgrounds, setBackgrounds] = useState(
+  const [backgrounds, setBackgrounds] = React.useState(
     arrayOfParticleJsConfigObjects
   );
-  const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
+  const [currentBackgroundIndex, setCurrentBackgroundIndex] = React.useState(0);
 
-  const [particeQuanity, setParticleQuantity] = useState(
+  const [particeQuanity, setParticleQuantity] = React.useState(
     backgrounds[currentBackgroundIndex].params.particles.number.value
   );
-  const [particleSize, setParticleSize] = useState(
+  const [particleSize, setParticleSize] = React.useState(
     backgrounds[currentBackgroundIndex].params.particles.size.value
   );
 
