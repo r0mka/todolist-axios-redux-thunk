@@ -1,0 +1,84 @@
+.bg-options {
+  position: fixed;
+  right: 5rem;
+  padding: 1rem;
+  background: rgb(53, 73, 93);
+
+  color: white;
+  width: 200px;
+  height: 500px;
+}
+.bg-options-title {
+  font-weight: 100;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+.bg-option {
+  background: rgb(45, 62, 79);
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  text-transform: capitalize;
+}
+
+.bg-option:hover {
+  background: rgba(41, 187, 156, 0.5);
+}
+.bg-active {
+  background: rgba(41, 187, 156, 1);
+}
+
+.slider-container {
+  margin: 3rem 0;
+}
+
+.slider-container div {
+  font-weight: 200;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 0.2rem 0;
+}
+
+.slider {
+  -webkit-appearance: none;
+  margin-right: 1rem;
+  width: 100%;
+  height: 5px;
+  border-radius: 5px;
+  background-color: #6c757d;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgba(41, 187, 156, 1);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: rgba(41, 187, 156, 1);
+  cursor: pointer;
+}
