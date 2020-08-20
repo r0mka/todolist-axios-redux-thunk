@@ -6,6 +6,8 @@ import TodoCreateForm from './TodoCreateForm';
 import { SortableContainer } from 'react-sortable-hoc';
 import SortableTodo from './SortableTodo';
 import Spinner from './Spinner';
+import { connect } from 'react-redux';
+import { getList, addTodo, deleteTodo } from '../redux/actions';
 
 const SortableList = SortableContainer(
   ({ list, update, destroy, toggleDone, move }) => {
@@ -31,81 +33,58 @@ const SortableList = SortableContainer(
   }
 );
 
-export default function TodoList() {
-  const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(true);
+function TodoList(props) {
+  const { loading, todos, getList, addTodo, deleteTodo } = props;
 
   const url = 'https://sleepy-taiga-81385.herokuapp.com/todo';
 
   const fetchAndUpdateList = () => {
-    return axios
-      .get(url)
-      .then((response) => {
-        const newList = response.data.map(
-          ({ _id, name, done, description }) => ({
-            id: _id,
-            title: name,
-            done,
-            description,
-          })
-        );
-        setList(newList);
-        return Promise.resolve();
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const create = (newTitle) => {
-    axios
-      .post(url, {
-        name: newTitle,
-      })
-      .then((response) => {
-        console.log(response.data);
-        fetchAndUpdateList();
-      })
-      .catch((error) => console.log(error));
+    // return axios
+    //   .get(url)
+    //   .then((response) => {
+    //     const newList = response.data.map(
+    //       ({ _id, name, done, description }) => ({
+    //         id: _id,
+    //         title: name,
+    //         done,
+    //         description,
+    //       })
+    //     );
+    //     setList(newList);
+    //     return Promise.resolve();
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   const update = (id, newTitle) => {
-    const currentDoneStatus = list.find((todo) => todo.id === id).done;
-    axios
-      .patch(`${url}/${id}`, {
-        name: newTitle,
-        done: currentDoneStatus,
-      })
-      .then((response) => {
-        console.log(response.data);
-        fetchAndUpdateList();
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const destroy = (id) => {
-    axios
-      .delete(`${url}/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        fetchAndUpdateList();
-      })
-      .catch((error) => console.log(error));
+    // const currentDoneStatus = list.find((todo) => todo.id === id).done;
+    // axios
+    //   .patch(`${url}/${id}`, {
+    //     name: newTitle,
+    //     done: currentDoneStatus,
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     fetchAndUpdateList();
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   const toggleDone = (id) => {
-    const currentDoneStatus = list.find((todo) => todo.id === id).done;
-    axios
-      .put(`${url}/${id}`, {
-        done: !currentDoneStatus,
-      })
-      .then((response) => {
-        console.log(response.data);
-        fetchAndUpdateList();
-      })
-      .catch((error) => console.log(error));
+    // const currentDoneStatus = list.find((todo) => todo.id === id).done;
+    // axios
+    //   .put(`${url}/${id}`, {
+    //     done: !currentDoneStatus,
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     fetchAndUpdateList();
+    //   })
+    //   .catch((error) => console.log(error));
   };
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
-    setList((items) => arrayMove(items, oldIndex, newIndex));
+    // setList((items) => arrayMove(items, oldIndex, newIndex));
   };
 
   const shouldCancelStart = (e) => {
@@ -113,21 +92,26 @@ export default function TodoList() {
     if (nodeNames.includes(e.target.nodeName)) return true;
   };
 
+  // React.useEffect(() => {
+  //   console.count('IN USE EFFECT');
+  //   fetchAndUpdateList().then((res) => setLoading(false));
+  // }, []);
+
   React.useEffect(() => {
-    console.count('IN USE EFFECT');
-    fetchAndUpdateList().then((res) => setLoading(false));
+    getList();
+    // eslint-disable-next-line
   }, []);
 
   return (
     <div className="TodoList">
       <h1>TodoList</h1>
-      <TodoCreateForm create={create} />
+      <TodoCreateForm create={addTodo} />
       {loading && <Spinner />}
       {!loading && (
         <SortableList
-          list={list}
+          list={todos}
           update={update}
-          destroy={destroy}
+          destroy={(id) => deleteTodo(id)}
           toggleDone={toggleDone}
           onSortEnd={onSortEnd}
           shouldCancelStart={shouldCancelStart}
@@ -137,3 +121,16 @@ export default function TodoList() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  todos: state.todos,
+  loading: state.loading,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addTodo: (newTitle) => dispatch(addTodo(newTitle)),
+  deleteTodo: (id) => dispatch(deleteTodo(id)),
+  getList: () => dispatch(getList()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

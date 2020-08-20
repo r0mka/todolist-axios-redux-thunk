@@ -3,7 +3,7 @@ import './App.css';
 import TodoList from './components/TodoList';
 import Background from './components/Background';
 
-export default function App() {
+function App() {
   return (
     <div className="App">
       <Background />
@@ -11,3 +11,5 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
