@@ -13,6 +13,26 @@ export const getList = () => (dispatch) =>
           description,
         })
       );
-      dispatch({ type: 'GET_TODO_LIST', payload: fetchedList });
+
+      const todoOrder = JSON.parse(fetchedList[0].description);
+      const todoOrderId = fetchedList[0].id;
+
+      const todoOrderData = {
+        id: todoOrderId,
+        todoOrder,
+      };
+
+      const todos = fetchedList.slice(1);
+
+      const newTodoState = {
+        todos: {},
+        todoOrderData,
+      };
+
+      todos.forEach((todo) => {
+        newTodoState.todos[todo.id] = todo;
+      });
+
+      dispatch({ type: 'GET_TODO_LIST', payload: newTodoState });
     })
     .catch((error) => console.log(error));

@@ -1,12 +1,23 @@
-const todo = (state = { todos: [], loading: true }, action) => {
+const todo = (
+  state = { todos: {}, todoOrderData: {}, loading: true },
+  action
+) => {
   switch (action.type) {
     case 'GET_TODO_LIST':
       return {
         ...state,
+        ...action.payload,
         loading: false,
-        todos: action.payload,
       };
 
+    case 'DRAG_SORT':
+      return {
+        ...state,
+        todoOrderData: {
+          ...state.todoOrderData,
+          todoOrder: action.payload,
+        },
+      };
     default:
       return state;
   }
