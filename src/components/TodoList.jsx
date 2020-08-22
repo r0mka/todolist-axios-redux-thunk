@@ -132,7 +132,9 @@ function TodoList({ loading, todos, todoOrderData, getList, onSortEnd }) {
             {(provided) => (
               <ul {...provided.droppableProps} ref={provided.innerRef}>
                 {todoOrderData.todoOrder.map((todoId, index) => {
-                  const todo = todos[todoId];
+                  const todo = todos[todoId] || {
+                    title: 'ID ERROR HAPPENED HERE',
+                  };
                   return (
                     <Todo
                       key={todo.id}
