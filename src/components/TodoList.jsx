@@ -73,7 +73,7 @@ function TodoList({ loading, todos, todoOrderData, getList, onSortEnd }) {
 
   // React-beatiful-dnd dragging
   const onDragEnd = (result) => {
-    const { destination, source } = result;
+    const { destination, source, draggableId } = result;
 
     if (!destination) {
       return;
@@ -92,12 +92,8 @@ function TodoList({ loading, todos, todoOrderData, getList, onSortEnd }) {
     if (start === finish) {
       // make a copy of array
       const newTodoOrder = todoOrderData.todoOrder.slice();
-
-      // swap elements
-      [newTodoOrder[source.index], newTodoOrder[destination.index]] = [
-        newTodoOrder[destination.index],
-        newTodoOrder[source.index],
-      ];
+      newTodoOrder.splice(source.index, 1);
+      newTodoOrder.splice(destination.index, 0, draggableId);
 
       // reorder elements in the state variable todoOrder
       onSortEnd(newTodoOrder);
