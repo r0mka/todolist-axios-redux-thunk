@@ -123,7 +123,7 @@ function TodoList({ loading, todos, todoOrderData, getList, onSortEnd }) {
 
   return (
     <div className="TodoList">
-      <h1>TodoList</h1>
+      <h1>Draggable Tasks</h1>
       <TodoCreateForm create={create} />
       {loading && <Spinner />}
       {!loading && (
